@@ -23,5 +23,10 @@
         dest: /usr/share/nginx/html/index.html
         mode: 0644
 
+    - name: Copy css file
+      ansible.builtin.copy:
+        src: css
+        dest: /usr/share/nginx/html
+        mode: 0644
 
 
