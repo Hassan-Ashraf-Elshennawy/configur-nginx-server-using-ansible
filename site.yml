@@ -1,0 +1,17 @@
+---
+- name: configure-nginx-server-using-ansible
+  hosts: webservers
+  tasks:
+    - name: update cashe and install nginx
+      ansible.builtin.yum:
+        name: nginx
+        state: present
+        update_cache: yes
+
+
+    - name: enable service
+      ansible.builtin.service:
+        name: nginx
+        enabled: yes
+        state: started
+
