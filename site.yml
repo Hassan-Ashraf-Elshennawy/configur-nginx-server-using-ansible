@@ -1,17 +1,27 @@
 ---
-- name: configure-nginx-server-using-ansible
+- name: Configure-nginx-server-using-ansible
   hosts: webservers
+  vars_files:
+    - vars/vars.yml
   tasks:
-    - name: update cashe and install nginx
+    - name: Updata cache and install nginx
       ansible.builtin.yum:
         name: nginx
         state: present
         update_cache: yes
 
 
-    - name: enable service
+    - name: Enable service nginx
       ansible.builtin.service:
         name: nginx
         enabled: yes
         state: started
+
+    - name: Copy index file
+      ansible.builtin.template:
+        src: index.html.j2
+        dest: /usr/share/nginx/html/index.html
+        mode: 0644
+
+
 
