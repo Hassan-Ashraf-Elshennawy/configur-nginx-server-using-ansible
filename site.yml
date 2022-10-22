@@ -4,29 +4,40 @@
   vars_files:
     - vars/vars.yml
   tasks:
-    - name: Updata cache and install nginx
+    - name: update_cache cache and install nginx
       ansible.builtin.yum:
         name: nginx
         state: present
         update_cache: yes
 
 
-    - name: Enable service nginx
+    - name: start ana enable service nginx
       ansible.builtin.service:
         name: nginx
         enabled: yes
         state: started
 
-    - name: Copy index file
+    - name: add custom root page
       ansible.builtin.template:
         src: index.html.j2
         dest: /usr/share/nginx/html/index.html
         mode: 0644
+      notify: 
+        - restart nginx service  
 
     - name: Copy css file
       ansible.builtin.copy:
         src: css
         dest: /usr/share/nginx/html
         mode: 0644
+
+  handlers:  
+    - name: restart nginx service
+      ansible.builtin.service:
+        name: nginx
+        state: restarted
+
+   
+  
 
 
